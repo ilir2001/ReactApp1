@@ -56,7 +56,7 @@ function Login() {
     return (
         <div className="container">
             <h3>Login</h3>
-            <form className="" onSubmit={handleSubmit}>
+            <form className="text-start" onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email:</label>
                     <input
