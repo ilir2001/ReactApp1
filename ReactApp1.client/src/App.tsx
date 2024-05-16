@@ -5,6 +5,7 @@ import Home from './Pages/Home.tsx';
 import Login from './Pages/Login.tsx';
 import Register from './Pages/Register.tsx';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (

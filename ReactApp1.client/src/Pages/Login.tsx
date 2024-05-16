@@ -1,17 +1,15 @@
+/* eslint-disable no-var */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-    // state variables for email and passwords
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [rememberme, setRememberme] = useState<boolean>(false);
-    // state variable for error messages
-    const [error, setError] = useState<string>("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [rememberme, setRememberme] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    // handle change events for input fields
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === "email") setEmail(value);
         if (name === "password") setPassword(value);
@@ -20,24 +18,17 @@ function Login() {
 
     const handleRegisterClick = () => {
         navigate("/register");
-    }
+    };
 
-    // handle submit event for the form
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        // validate email and passwords
         if (!email || !password) {
             setError("Please fill in all fields.");
         } else {
-            // clear error message
             setError("");
-            // post data to the /register api
-
             var loginurl = "";
-            if (rememberme == true)
-                loginurl = "/login?useCookies=true";
-            else
-                loginurl = "/login?useSessionCookies=true";
+            if (rememberme) loginurl = "/login?useCookies=true";
+            else loginurl = "/login?useSessionCookies=true";
 
             fetch(loginurl, {
                 method: "POST",
@@ -49,20 +40,13 @@ function Login() {
                     password: password,
                 }),
             })
-
                 .then((data) => {
-                    // handle success or error from the server
-                    console.log(data);
                     if (data.ok) {
                         setError("Successful Login.");
-                        window.location.href = '/';
-                    }
-                    else
-                        setError("Error Logging In.");
-
+                        window.location.href = "/";
+                    } else setError("Error Logging In.");
                 })
                 .catch((error) => {
-                    // handle network error
                     console.error(error);
                     setError("Error Logging in.");
                 });
@@ -70,49 +54,46 @@ function Login() {
     };
 
     return (
-        <div className="containerbox">
+        <div className="container">
             <h3>Login</h3>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label className="forminput" htmlFor="email">Email:</label>
-                </div>
-                <div>
+            <form className="" onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email:</label>
                     <input
                         type="email"
+                        className="form-control"
                         id="email"
                         name="email"
                         value={email}
                         onChange={handleChange}
                     />
                 </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                </div>
-                <div>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password:</label>
                     <input
                         type="password"
+                        className="form-control"
                         id="password"
                         name="password"
                         value={password}
                         onChange={handleChange}
                     />
                 </div>
-                <div>
+                <div className="mb-3 form-check">
                     <input
                         type="checkbox"
+                        className="form-check-input"
                         id="rememberme"
                         name="rememberme"
                         checked={rememberme}
-                        onChange={handleChange} /><span>Remember Me</span>
+                        onChange={handleChange}
+                    />
+                    <label className="form-check-label" htmlFor="rememberme">Remember Me</label>
                 </div>
-                <div>
-                    <button type="submit">Login</button>
-                </div>
-                <div>
-                    <button onClick={handleRegisterClick}>Register</button>
-                </div>
+                <button type="submit" className="btn btn-primary">Login</button>
+                <button type="button" className="btn btn-secondary ms-2" onClick={handleRegisterClick}>Register</button>
             </form>
-            {error && <p className="error">{error}</p>}
+            {error && <p className="error mt-3">{error}</p>}
         </div>
     );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +23,6 @@ function LogoutLink(props: { children: React.ReactNode }) {
                     navigate("/login");
                 }
                 else { }
-
 
             })
             .catch((error) => {

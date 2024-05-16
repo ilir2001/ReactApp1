@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function Register() {
     // state variables for email and passwords
     const [email, setEmail] = useState("");
@@ -16,9 +15,8 @@ function Register() {
         navigate("/login");
     }
 
-
     // handle change events for input fields
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === "email") setEmail(value);
         if (name === "password") setPassword(value);
@@ -26,7 +24,7 @@ function Register() {
     };
 
     // handle submit event for the form
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         // validate email and passwords
         if (!email || !password || !confirmPassword) {
@@ -49,7 +47,6 @@ function Register() {
                     password: password,
                 }),
             })
-                //.then((response) => response.json())
                 .then((data) => {
                     // handle success or error from the server
                     console.log(data);
@@ -57,7 +54,6 @@ function Register() {
                         setError("Successful register.");
                     else
                         setError("Error registering.");
-
                 })
                 .catch((error) => {
                     // handle network error
@@ -68,51 +64,46 @@ function Register() {
     };
 
     return (
-        <div className="containerbox">
+        <div className="container">
             <h3>Register</h3>
-
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                </div><div>
+            <form className="text-start" onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email:</label>
                     <input
                         type="email"
+                        className="form-control"
                         id="email"
                         name="email"
                         value={email}
                         onChange={handleChange}
                     />
                 </div>
-                <div>
-                    <label htmlFor="password">Password:</label></div><div>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password:</label>
                     <input
                         type="password"
+                        className="form-control"
                         id="password"
                         name="password"
                         value={password}
                         onChange={handleChange}
                     />
                 </div>
-                <div>
-                    <label htmlFor="confirmPassword">Confirm Password:</label></div><div>
+                <div className="mb-3">
+                    <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
                     <input
                         type="password"
+                        className="form-control"
                         id="confirmPassword"
                         name="confirmPassword"
                         value={confirmPassword}
                         onChange={handleChange}
                     />
                 </div>
-                <div>
-                    <button type="submit">Register</button>
-
-                </div>
-                <div>
-                    <button onClick={handleLoginClick}>Go to Login</button>
-                </div>
+                <button type="submit" className="btn btn-primary">Register</button>
+                <button type="button" className="btn btn-secondary ms-2" onClick={handleLoginClick}>Go to Login</button>
             </form>
-
-            {error && <p className="error">{error}</p>}
+            {error && <p className="error mt-3">{error}</p>}
         </div>
     );
 }

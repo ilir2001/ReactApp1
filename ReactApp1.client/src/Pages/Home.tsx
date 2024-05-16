@@ -1,12 +1,13 @@
-import WeatherForecast from "../Components/WeatherForecast.tsx";
-import LogoutLink from "../Components/LogoutLink.tsx";
-import AuthorizeView, { AuthorizedUser } from "../Components/AuthorizeView.tsx";
+import React from 'react';
+import LogoutLink from '../Components/LogoutLink.tsx';
+import AuthorizeView from '../Components/AuthorizeView.tsx';
+import Welcome from '../Components/Welcome.tsx';
 
-function Home() {
+const Home: React.FC = () => {
     return (
         <AuthorizeView>
-            <span><LogoutLink>Logout <AuthorizedUser value="email" /></LogoutLink></span>
-            <WeatherForecast />
+            <Welcome />
+            <LogoutLink>Logout</LogoutLink>
         </AuthorizeView>
     );
 }
